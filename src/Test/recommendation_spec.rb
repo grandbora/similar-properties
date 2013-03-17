@@ -50,4 +50,45 @@ describe RecommendationHelper do
     end
 
   end
+
+  context "returns similar properties by distance" do
+
+    before(:each) do
+      @property1 = Property.new('name1', 2, -0.02, 0.11)
+      @property2 = Property.new('name2', 2, 0.09, 0.012)
+      @property3 = Property.new('name3', 2, 0.01, -0.02)
+      @property4 = Property.new('name4', 2, -0.59, -0.107)
+      @property5 = Property.new('name5', 2, 1.1, 0.01)
+      @property_list =[@property1, @property2, @property3, @property4, @property5]
+      @recommendation_helper.property_list= @property_list
+    end
+    
+    it "none of them are close" do
+      unavailable = Property.new('unavailable', 2, 40, 40)
+      actual = @recommendation_helper.get_similar_properties(unavailable)
+      actual.should eq([])
+    end
+
+    it "some of them are close" do
+      unavailable = Property.new('unavailable', 2, 0, 0)
+      actual = @recommendation_helper.get_similar_properties(unavailable)
+      actual.should eq([@property1, @property2, @property3])
+    end
+    
+  end
+
+    it "runs the examples given in descriptyion" do
+      property1 = Property.new('Sizable house'   , 2, 51.501000, -0.142000)
+      property2 = Property.new('Trendy flat'     , 2, 51.523778, -0.205500)
+      property3 = Property.new('Flat with views' , 2, 51.504444, -0.086667)
+      property4 = Property.new('Unique flat'     , 1, 51.538333, -0.013333)
+      property5 = Property.new('Isolated house'  , 1, 50.066944, -5.746944)
+      property_list =[property1, property2, property3, property4, property5]
+      @recommendation_helper.property_list= property_list
+    
+      unavailable = Property.new('unavailable', 1, 51.520000, -0.013300)
+      actual = @recommendation_helper.get_similar_properties(unavailable)
+      actual.should eq([property1, property2, property3, property4])
+    end
+
 end

@@ -3,7 +3,8 @@ class RecommendationHelper
 
   def get_similar_properties(unavailable)
     @property_list.reject do |property|
-      unavailable.bedroom_count > property.bedroom_count
+      next true if unavailable.bedroom_count > property.bedroom_count
+      property.get_distance(unavailable.latitude, unavailable.longitude) > 20
     end
   end
 

@@ -27,6 +27,9 @@ describe Property do
 
       actual = origin.get_distance(0, -1)
       actual.should be_within(1).of(444)
+
+      actual = origin.get_distance(-1, 3)
+      actual.should be_within(1).of(111)
     end
 
     it "on latitude 40 degree " do
