@@ -1,0 +1,16 @@
+language: ruby
+
+rvm:
+  - 1.8.7
+
+before_script:
+    - bundle
+
+script: rspec src/Test
+
+notifications:
+  email:
+    recipients:
+      - bora.tunca@yahoo.com
+    on_success: always
+    on_failure: always
