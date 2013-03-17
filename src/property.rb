@@ -1,4 +1,8 @@
+require File.expand_path('../distance_calculator', __FILE__)
+
 class Property
+  include DistanceCalculator
+
   attr_reader :name
   attr_reader :bedroom_count
   attr_reader :latitude
